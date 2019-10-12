@@ -8,7 +8,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 
 public class MyFragment extends Fragment {
@@ -27,6 +32,8 @@ public class MyFragment extends Fragment {
             public void onClick(View v) {
                 ItemListDialogFragment dialogFragment = new ItemListDialogFragment();
                 dialogFragment.show(getFragmentManager(), dialogFragment.getTag());
+//                BottomSheetBehavior behavior = BottomSheetBehavior.from((View)view.getParent());
+//                behavior.setPeekHeight(WindowManager.LayoutParams.MATCH_PARENT);
             }
         });
         return view;
