@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,42 +8,37 @@
     android:fitsSystemWindows="true"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
+        android:id="@+id/text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/list_item_spacing"
+        android:paddingTop="@dimen/list_item_spacing_half"
+        android:paddingRight="@dimen/list_item_spacing"
+        android:paddingBottom="@dimen/list_item_spacing_half"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large">
 
-        <LinearLayout
-            android:id="@+id/text"
+        <EditText
+            android:id="@+id/editText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/list_item_spacing"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/btns"
+            android:ems="10"
+            android:hint="QWERTY"
+            android:inputType="text"
+            android:padding="10dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:paddingTop="@dimen/list_item_spacing_half"
-            android:paddingRight="@dimen/list_item_spacing"
             android:paddingBottom="@dimen/list_item_spacing_half"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large">
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:background="@drawable/btns"
-                android:ems="10"
-                android:hint="QWERTY"
-                android:inputType="text"
-                android:padding="10dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingTop="@dimen/list_item_spacing_half"
-                android:paddingBottom="@dimen/list_item_spacing_half"
-                tools:context=".ItemListDialogFragment"
-                tools:listitem="@layout/fragment_item_list_dialog_item" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+            tools:context=".ItemListDialogFragment"
+            tools:listitem="@layout/fragment_item_list_dialog_item" />
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
