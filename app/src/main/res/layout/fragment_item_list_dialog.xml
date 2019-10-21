@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="4dp"
+    android:fadeScrollbars="true"
     android:orientation="vertical"
     tools:ignore="UnusedAttribute">
 
@@ -30,13 +31,19 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="FROM" />
+                android:text="FROM"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/sheet_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="X" />
+                android:background="@drawable/ic_close_black_24dp"
+                android:clickable="true"
+                android:textStyle="bold" />
 
         </FrameLayout>
 
@@ -61,11 +68,6 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/list_item_spacing_half"
-            android:paddingBottom="@dimen/list_item_spacing_half"
-            tools:context=".ItemListDialogFragment"
-            tools:listitem="@layout/fragment_item_list_dialog_item" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 </LinearLayout>
