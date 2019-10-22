@@ -44,7 +44,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemClicked(item.getName());
+                if (mListener != null)
+                    mListener.onItemClicked(item);
                 Log.d(TAG, item.toString());
             }
         });
@@ -56,6 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             return 0;
         return mList.size();
     }
+
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -70,6 +72,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     public interface BottomSheetListener {
-        void onItemClicked(String text);
+        void onItemClicked(MyItem item);
     }
+
+    public void setmListener(BottomSheetListener listener) {
+        this.mListener = listener;
+    }
+
 }

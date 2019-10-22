@@ -1,13 +1,16 @@
 package test.polygon;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,10 +32,9 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
     private static final String TAG = "ItemListDialogFragment";
 
     private BottomSheetBehavior mBehavior;
-    private MyAdapter adapter;
+    public MyAdapter adapter;
     private List<MyItem> mItemList;
     private TextView sheetClose;
-    private CardView cv;
 
 
     @Override
@@ -53,6 +55,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
 
         View view = View.inflate(getContext(), R.layout.fragment_item_list_dialog, null);
 
+
         sheetClose = view.findViewById(R.id.sheet_close);
         sheetClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +64,6 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
             }
         });
 
-
-        cv = view.findViewById(R.id.cv);
 
         LinearLayout linearLayout = view.findViewById(R.id.bottomSheet);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
@@ -73,6 +74,15 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
+        adapter.setmListener(new MyAdapter.BottomSheetListener() {
+            @Override
+            public void onItemClicked(MyItem item) {
+                Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
+                dismiss();
+            }
+        });
+
 //
 //        EditText editTextSearch = view.findViewById(R.id.editTextSearch);
 //        editTextSearch.addTextChangedListener(textWatcher);
@@ -99,22 +109,12 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
         return Resources.getSystem().getDisplayMetrics().heightPixels;
     }
 
-    public void onItemClicked(String text) {
-        Log.d(TAG, text);
+    public void onItemClicked(MyItem item) {
+        Log.d(TAG, item.toString());
     }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-//                             @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_item_list_dialog, container, false);
-//        return view;
-//    }
-//
-//    @Override
-//    public void setupDialog(@NonNull Dialog dialog, int style) {
-//        View v = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_item_list_dialog, null);
-//        dialog.setContentView(v);
-//    }
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
 }
