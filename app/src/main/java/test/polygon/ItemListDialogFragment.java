@@ -1,7 +1,6 @@
 package test.polygon;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,14 +52,10 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
 
         View view = View.inflate(getContext(), R.layout.fragment_item_list_dialog, null);
 
+        final TextView txt = view.findViewById(R.id.txt);
 
         sheetClose = view.findViewById(R.id.sheet_close);
-        sheetClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        sheetClose.setOnClickListener(v -> dialog.dismiss());
 
 
         LinearLayout linearLayout = view.findViewById(R.id.bottomSheet);
@@ -75,13 +68,12 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        adapter.setmListener(new MyAdapter.BottomSheetListener() {
-            @Override
-            public void onItemClicked(MyItem item) {
-                Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
-                dismiss();
-            }
+        adapter.setmListener(item -> {
+            Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
+            callback.callingBack(item);
+            dismiss();
         });
+
 
 //
 //        EditText editTextSearch = view.findViewById(R.id.editTextSearch);
@@ -113,8 +105,19 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
         Log.d(TAG, item.toString());
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
+    interface Callback {
+        void callingBack(MyItem item);
+    }
+
+    Callback callback;
+    MyItem itm;
+
+    public void registerCallBack(Callback callback) {
+        this.callback = callback;
+    }
+
+    void doSomething() {
+        // вызываем метод обратного вызова
+        callback.callingBack(itm);
     }
 }

@@ -41,13 +41,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.gov.setText(item.getGov());
 
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null)
-                    mListener.onItemClicked(item);
-                Log.d(TAG, item.toString());
-            }
+        holder.itemView.setOnClickListener(v -> {
+            if (mListener != null)
+                mListener.onItemClicked(item);
+            Log.d(TAG, item.toString());
         });
     }
 
@@ -66,7 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         MyViewHolder(View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.itemStationName);
+            name = itemView.findViewById(R.id.city);
             gov = itemView.findViewById(R.id.gov);
         }
     }
@@ -78,5 +75,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void setmListener(BottomSheetListener listener) {
         this.mListener = listener;
     }
-
 }
