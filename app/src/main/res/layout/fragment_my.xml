@@ -23,5 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="qwe"
+        android:textColor="@color/colorWhite"
+        android:textFontWeight="700"
+        android:textSize="24sp"
         android:gravity="bottom|center"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

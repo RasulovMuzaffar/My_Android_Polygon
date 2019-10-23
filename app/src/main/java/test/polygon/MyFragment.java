@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 import test.polygon.POJO.MyItem;
 
 
-public class MyFragment extends Fragment implements ItemListDialogFragment.Callback{
+public class MyFragment extends Fragment implements ItemListDialogFragment.Callback {
     public static final String TAG = "my_fragment";
     final static String MY_DATA = "my_data";
 
@@ -26,15 +26,14 @@ public class MyFragment extends Fragment implements ItemListDialogFragment.Callb
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_my, container, false);
 
-        txt = getActivity().findViewById(R.id.txt);
+        txt = view.findViewById(R.id.txt);
 
         btn = view.findViewById(R.id.btnClick);
 
         btn.setOnClickListener(v -> {
             ItemListDialogFragment dialogFragment = new ItemListDialogFragment();
 
-            dialogFragment.registerCallBack(new MyFragment());
-            dialogFragment.doSomething();
+            dialogFragment.registerCallBack(this);
 
             dialogFragment.show(getFragmentManager(), dialogFragment.getTag());
 
@@ -51,6 +50,7 @@ public class MyFragment extends Fragment implements ItemListDialogFragment.Callb
 
     @Override
     public void callingBack(MyItem item) {
-        System.out.println("==== "+item);
+        txt.setText(item.toString());
+        System.out.println("==== " + item);
     }
 }

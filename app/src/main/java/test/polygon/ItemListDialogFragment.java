@@ -1,6 +1,7 @@
 package test.polygon;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,14 +69,14 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        adapter.setmListener(this);
+//        adapter.setmListener(item -> {
+//            Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
+//            if (callback != null)
+//                callback.callingBack(item);
 
-        adapter.setmListener(item -> {
-            Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
-
-            callback.callingBack(item);
-
-            dismiss();
-        });
+//            dismiss();
+//        });
 
 
 //
@@ -105,6 +107,10 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
 
     public void onItemClicked(MyItem item) {
         Log.d(TAG, item.toString());
+        System.out.println("---------------");
+        if (callback != null)
+            callback.callingBack(item);
+        dismiss();
     }
 
     interface Callback {
