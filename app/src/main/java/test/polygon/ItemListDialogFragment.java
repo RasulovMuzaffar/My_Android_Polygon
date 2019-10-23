@@ -1,16 +1,16 @@
 package test.polygon;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +33,7 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
     private BottomSheetBehavior mBehavior;
     public MyAdapter adapter;
     private List<MyItem> mItemList;
+    private List<MyItem> mSearchItemList;
     private TextView sheetClose;
 
 
@@ -40,7 +41,8 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mItemList = createItems();
-        adapter = new MyAdapter(mItemList);
+        mSearchItemList = createItems();
+        adapter = new MyAdapter(mSearchItemList);
     }
 
     @Override
@@ -80,8 +82,8 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
 
 
 //
-//        EditText editTextSearch = view.findViewById(R.id.editTextSearch);
-//        editTextSearch.addTextChangedListener(textWatcher);
+        EditText editTextSearch = view.findViewById(R.id.editText);
+        editTextSearch.addTextChangedListener(textWatcher);
 
         dialog.setContentView(view);
         mBehavior = BottomSheetBehavior.from((View) view.getParent());
@@ -103,6 +105,36 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
 
     public static int getScreenHeight() {
         return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
+    private TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            search(s.toString().toLowerCase());
+        }
+
+    };
+
+    private void search(String searchTerm) {
+        mSearchItemList.clear();
+        for (MyItem item : mItemList) {
+            if (item.getName().toLowerCase().contains(searchTerm)) {
+                mSearchItemList.add(item);
+                System.out.println(mSearchItemList);
+            }
+        }
+
+        adapter.notifyDataSetChanged();
+
     }
 
     public void onItemClicked(MyItem item) {
