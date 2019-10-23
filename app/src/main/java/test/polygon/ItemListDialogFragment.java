@@ -70,7 +70,9 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
 
         adapter.setmListener(item -> {
             Toast.makeText(getContext(), item.toString(), Toast.LENGTH_SHORT).show();
+
             callback.callingBack(item);
+
             dismiss();
         });
 
