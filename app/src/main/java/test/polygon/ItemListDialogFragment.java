@@ -66,9 +66,6 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
 
         View view = View.inflate(getContext(), R.layout.fragment_item_list_dialog, null);
 
-
-        final TextView txt = view.findViewById(R.id.txt);
-
         sheetClose = view.findViewById(R.id.sheet_close);
         sheetClose.setOnClickListener(v -> dialog.dismiss());
 
@@ -119,19 +116,15 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
     }
 
     public List<MyItem> createItems() {
-//        String product = "";
         ArrayList<MyItem> items = new ArrayList<>();
 
         Cursor cursor = mDb.rawQuery("SELECT * FROM stations LIMIT 20", null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             items.add(new MyItem(cursor.getString(2), cursor.getString(3)));
-//            product += cursor.getString(2) + " | "+cursor.;
             cursor.moveToNext();
         }
         cursor.close();
-//        System.out.println(product);
-//        textView.setText(product);
 
 //        items.add(new MyItem("Moscow", "Russia"));
 //        items.add(new MyItem("Saint-Petersburg", "Russia"));
@@ -196,14 +189,8 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
     }
 
     Callback callback;
-    MyItem itm;
 
     public void registerCallBack(Callback callback) {
         this.callback = callback;
-    }
-
-    void doSomething() {
-        // вызываем метод обратного вызова
-        callback.callingBack(itm);
     }
 }

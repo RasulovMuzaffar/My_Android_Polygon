@@ -20,6 +20,8 @@ public class MyFragment extends Fragment implements ItemListDialogFragment.Callb
 
     private TextView btn;
     private TextView txt;
+    private TextView btn2;
+    private TextView txt2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,7 +32,9 @@ public class MyFragment extends Fragment implements ItemListDialogFragment.Callb
 
         btn = view.findViewById(R.id.btnClick);
 
+
         btn.setOnClickListener(v -> {
+            flag = 1;
             ItemListDialogFragment dialogFragment = new ItemListDialogFragment();
 
             dialogFragment.registerCallBack(this);
@@ -39,6 +43,19 @@ public class MyFragment extends Fragment implements ItemListDialogFragment.Callb
 
         });
 
+        txt2 = view.findViewById(R.id.txt2);
+
+        btn2 = view.findViewById(R.id.btnClick2);
+
+        btn2.setOnClickListener(v -> {
+            flag = 2;
+            ItemListDialogFragment dialogFragment = new ItemListDialogFragment();
+
+            dialogFragment.registerCallBack(this);
+
+            dialogFragment.show(getFragmentManager(), dialogFragment.getTag());
+
+        });
 
         return view;
     }
@@ -48,9 +65,14 @@ public class MyFragment extends Fragment implements ItemListDialogFragment.Callb
         super.onAttach(context);
     }
 
+    static int flag = 0;
+
     @Override
     public void callingBack(MyItem item) {
-        txt.setText(item.toString());
-        System.out.println("==== " + item);
+        if (flag == 1)
+            txt.setText(item.toString());
+        if (flag == 2)
+            txt2.setText(item.toString());
+        flag = 0;
     }
 }
