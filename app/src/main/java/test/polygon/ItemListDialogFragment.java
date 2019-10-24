@@ -67,8 +67,6 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
         View view = View.inflate(getContext(), R.layout.fragment_item_list_dialog, null);
 
 
-
-
         final TextView txt = view.findViewById(R.id.txt);
 
         sheetClose = view.findViewById(R.id.sheet_close);
@@ -168,12 +166,18 @@ public class ItemListDialogFragment extends BottomSheetDialogFragment implements
 
     private void search(String searchTerm) {
         mSearchItemList.clear();
-        for (MyItem item : mItemList) {
-            if (item.getName().toLowerCase().contains(searchTerm)) {
-                mSearchItemList.add(item);
-                System.out.println(mSearchItemList);
-            }
+//        for (MyItem item : mItemList) {
+//            if (item.getName().toLowerCase().contains(searchTerm)) {
+//                mSearchItemList.add(item);
+//            }
+//        }
+        Cursor cursor = mDb.rawQuery("SELECT * FROM stations WHERE st_name like '" + searchTerm + "%' LIMIT 20", null);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            mSearchItemList.add(new MyItem(cursor.getString(2), cursor.getString(3)));
+            cursor.moveToNext();
         }
+        cursor.close();
 
         adapter.notifyDataSetChanged();
 
